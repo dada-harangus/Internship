@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./functionality.js"></script>
+  <title>Page Title</title>
+</head>
+
+<body>
+ <div class="content">
+  <table id="myTable">
+    <th>Name</th>
+    <th>Premiere date</th>
+    <th>Genre</th>
+    <th>Rating</th>
+    <th>DVD release</th>
+  </table>
+  </div>
+  <div class="sidenav">
+  <form name="myForm" id="myForm" method=post>
+    <label for="fname"> Name </label><br>
+    <input  type="text" id="fname" name="fname" required><br><br>
+
+    <label for="ldate">Premiere date</label><br>
+    <input type="text" id="ldate" name="ldate"><br><br>
+
+    <input type="checkbox" name="ckb" value="drama" onclick='chkcontrol(0)'>
+    <label for="ckb"> It`s a drama </label><br>
+
+    <input type="checkbox" id="Comedy" name="ckb" value="comedy" onclick='chkcontrol(1)'>
+    <label for="ckb"> It`s a comedy</label><br>
+
+    <input type="checkbox" id="Horror" name="ckb" value="horror" onclick='chkcontrol(2)'>
+    <label for="ckb"> It`s a horror movie </label><br>
+
+    <input type="checkbox" id="Action" name="ckb" value="action" onclick='chkcontrol(3)'>
+    <label for="ckb"> It`s a action movie</label><br>
+
+    <input type="checkbox" id="Thriller" name="ckb" value="thriller" onclick='chkcontrol(4)'>
+    <label for="ckb"> It`s a thriller </label><br>
+
+    <label for="rating"> Rating (From 1 to 5) </label><br>
+    <input type="range" id="rating" name="rating" min="1" max="5"><br> <br>
+
+    <label for="dvd"> DVD release </label>
+    <input type="checkbox" id="dvd" name="dvd" value="Yes">
+    <br> <br>
+    <button class="button" onclick=" return addInput(event);"> Submit </button>
+
+  </form>
+</div>
+
+</body>
+
+</html>
