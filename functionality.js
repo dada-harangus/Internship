@@ -1,6 +1,17 @@
+function Movie(name,date,rating, genre,dvd) {
+    this.name = name;
+    this.date = date;
+    this.rating = rating;
+    this.genre = genre;
+    this.dvd = dvd;
+  }
+ var movieList =[];
+ var contor = 1;
+
+
 function addInput(event) {
     event.preventDefault();
-   
+    
     var isFilled = document.getElementById("fname").value;
     if (isFilled == "") {
         alert("Name must be provieded");
@@ -13,23 +24,40 @@ function addInput(event) {
     }
 
     var table = document.getElementById("myTable");
+    for(var i = table.rows.length - 1; i > 0; i--)
+    {
+        table.deleteRow(i);
+    }
+   
     var name = document.getElementById("fname").value;
     var date = document.getElementById("ldate").value;
     var rating = document.getElementById("rating").value;
-    // var genre = document.getElementById("genre").value;
+    var genre =  getCheckboxvalues().join();
     var dvd = document.getElementById("dvd").checked;
-    var row = table.insertRow(1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
 
-    cell1.innerHTML = name;
-    cell2.innerHTML = date;
-    cell3.innerHTML = getCheckboxvalues().join();;
-    cell4.innerHTML = rating;
-    cell5.innerHTML = dvd;
+    var movie = new Movie (name, date, genre, rating, dvd);
+    movieList.push(movie);
+
+    for(var i = 0; i< movieList.length ; i++){
+       
+       
+        var row = table.insertRow(i+1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+    
+        cell1.innerHTML =movieList[i].name;
+        cell2.innerHTML = movieList[i].date;
+        cell3.innerHTML = movieList[i].genre;
+        cell4.innerHTML = movieList[i].rating;
+        cell5.innerHTML = movieList[i].dvd;
+
+        contor++;
+    }
+  
+   
 
     clearForm();
 }
