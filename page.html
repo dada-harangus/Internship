@@ -7,17 +7,19 @@
   <title>Page Title</title>
 </head>
 
-<body>
+<body onload="GetDataFromStorage()">
  <div class="content">
   <table id="myTable">
-    <th>Name</th>
-    <th>Premiere date</th>
-    <th>Genre</th>
-    <th>Rating</th>
-    <th>DVD release</th>
+    <th name="name" onclick="SortTable(this)">Name</th>
+    <th onclick="SortTable(this)">Premiere date</th>
+    <th onclick="SortTable(this)">Genre</th>
+    <th onclick="SortTable(this)">Rating</th>
+    <th onclick="SortTable(this)">DVD release</th>
+    <th></th>
   </table>
+  <script>console.log("finish")</script>
   </div>
-  <div class="sidenav">
+  <div class="sidenav" >
   <form name="myForm" id="myForm" method=post>
     <label for="fname"> Name </label><br>
     <input  type="text" id="fname" name="fname" required><br><br>

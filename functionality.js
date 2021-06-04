@@ -1,4 +1,5 @@
-function Movie(name,date,rating, genre,dvd) {
+function Movie(id,name,date,rating, genre,dvd) {
+    this.id = id,
     this.name = name;
     this.date = date;
     this.rating = rating;
@@ -6,8 +7,19 @@ function Movie(name,date,rating, genre,dvd) {
     this.dvd = dvd;
   }
  var movieList =[];
- var contor = 1;
+ 
 
+// document.addEventListener('DOMContentLoaded', GetDataFromStorage(), false);
+ 
+ function GetDataFromStorage(){
+ 
+ if (localStorage.getItem('myDataKey') !== null) {
+    movieList = JSON.parse(localStorage.getItem('myDataKey'));
+    var table = document.getElementById("myTable");
+    for(var i = 0 ; i < movieList.length; i++)
+    InsertDataIntoTable(i,table);
+  } 
+}
 
 function addInput(event) {
     event.preventDefault();
@@ -23,45 +35,76 @@ function addInput(event) {
         return false;
     }
 
-    var table = document.getElementById("myTable");
-    for(var i = table.rows.length - 1; i > 0; i--)
-    {
-        table.deleteRow(i);
-    }
-   
+    
+    
     var name = document.getElementById("fname").value;
     var date = document.getElementById("ldate").value;
     var rating = document.getElementById("rating").value;
     var genre =  getCheckboxvalues().join();
     var dvd = document.getElementById("dvd").checked;
 
-    var movie = new Movie (name, date, genre, rating, dvd);
-    movieList.push(movie);
 
-    for(var i = 0; i< movieList.length ; i++){
-       
-       
-        var row = table.insertRow(i+1);
+    var movie = new Movie (id,name, date, genre, rating, dvd);
+
+    while(movie.id == undefined){
+        var id =Math.floor(Math.random() * 100);
+
+        if(movieList.find(movie => movie.id == id) == undefined){
+            movie.id = id;
+            var table = document.getElementById("myTable");
+            InsertDataIntoTable(movieList.length,table,movie);
+            movieList.push(movie);
+        }
+    }
+    
+    
+
+    
+    
+    
+    localStorage.setItem('myDataKey', JSON.stringify( movieList));
+    clearForm();
+}
+
+
+
+function InsertDataIntoTable(contor,table ,movie){
+    
+       var row = table.insertRow(contor+1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
         var cell4 = row.insertCell(3);
         var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
     
-        cell1.innerHTML =movieList[i].name;
-        cell2.innerHTML = movieList[i].date;
-        cell3.innerHTML = movieList[i].genre;
-        cell4.innerHTML = movieList[i].rating;
-        cell5.innerHTML = movieList[i].dvd;
+        cell1.innerHTML = movie? movie.name : movieList[contor].name;
+        cell2.innerHTML = movie? movie.date : movieList[contor].date;
+        cell3.innerHTML = movie? movie.genre :  movieList[contor].genre;
+        cell4.innerHTML = movie? movie.rating :  movieList[contor].rating;
+        cell5.innerHTML = movie? movie.dvd :  movieList[contor].dvd;
+        var button = document.createElement('button');
+        button.innerHTML ="Delete";
+        cell6.appendChild(button);
+        button.setAttribute('onclick','(DeleteRow('+row.rowIndex +', '+ contor + '))') ;
+        
 
-        contor++;
-    }
-  
-   
+        
 
-    clearForm();
 }
 
+
+function DeleteRow(tableRowIndex , movieListIndex){
+
+    document.getElementById("myTable").deleteRow(tableRowIndex);
+    movieList.push(movieList.splice(movieListIndex, 1)[0]);
+    movieList.pop();
+    localStorage.setItem('myDataKey', JSON.stringify( movieList));
+
+
+
+
+}
 
 function dateValidation() {
 
@@ -122,4 +165,62 @@ function getCheckboxvalues() {
         }
     }
     return values;
+}
+
+function SortTable(t){
+    
+   let ColumnValue = new Map();
+   ColumnValue [0] = 'name';
+   ColumnValue [1] = 'date';
+   ColumnValue [2] = 'rating';
+   ColumnValue [3] = 'genre';
+   ColumnValue [4] = 'dvd';
+   var counter = 1 ;
+
+
+   movieList.sort(compareValues(ColumnValue[t.cellIndex] ))
+   
+
+   function ClickEvenOrOdd (contor){
+
+     if (contor % 2 == 1)
+     return true;
+
+   }
+
+   var table = document.getElementById("myTable");
+    clearTable();
+    for(var i = 0 ; i < movieList.length; i++)
+    InsertDataIntoTable(i,table);
+}
+
+function compareValues(key, order = 'asc') {
+    return function innerSort(a, b) {
+      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        // property doesn't exist on either object
+        return 0;
+      }
+  
+      const varA = (typeof a[key] === 'string')
+        ? a[key].toUpperCase() : a[key];
+      const varB = (typeof b[key] === 'string')
+        ? b[key].toUpperCase() : b[key];
+  
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return (
+        (order === 'desc') ? (comparison * -1) : comparison
+      );
+    };
+  }
+function clearTable(){
+  var table = document.getElementById("myTable");
+    for(var i = table.rows.length - 1; i > 0; i--)
+    {
+        table.deleteRow(i);
+    }
 }
