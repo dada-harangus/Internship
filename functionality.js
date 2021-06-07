@@ -167,6 +167,32 @@ function getCheckboxvalues() {
     return values;
 }
 
+function SortDirection (){
+
+    var spanAsc = document.getElementsByClassName("asc") ;
+    var spanDesc = document.getElementsByClassName("desc") ;
+   if( getComputedStyle(spanAsc[0]).display == 'none'){
+      
+    for(var i = 0; i < spanAsc.length; i++){
+        
+        spanAsc[i].style.display = "inline"; 
+        spanDesc[i].style.display = "none";
+    }
+    return 'asc';
+   } else
+   {
+   
+    for(var i = 0; i < spanDesc.length; i++){
+        
+        spanDesc[i].style.display = "inline"; 
+        spanAsc[i].style.display = "none"; 
+        
+   }
+   return 'desc';
+}
+}
+
+
 function SortTable(t){
     
    let ColumnValue = new Map();
@@ -178,17 +204,9 @@ function SortTable(t){
    var counter = 1 ;
 
 
-   movieList.sort(compareValues(ColumnValue[t.cellIndex] ))
+   movieList.sort(compareValues(ColumnValue[t.cellIndex] , SortDirection () ))
    
-
-   function ClickEvenOrOdd (contor){
-
-     if (contor % 2 == 1)
-     return true;
-
-   }
-
-   var table = document.getElementById("myTable");
+    var table = document.getElementById("myTable");
     clearTable();
     for(var i = 0 ; i < movieList.length; i++)
     InsertDataIntoTable(i,table);

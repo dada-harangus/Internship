@@ -10,14 +10,27 @@
 <body onload="GetDataFromStorage()">
  <div class="content">
   <table id="myTable">
-    <th name="name" onclick="SortTable(this)">Name</th>
-    <th onclick="SortTable(this)">Premiere date</th>
-    <th onclick="SortTable(this)">Genre</th>
-    <th onclick="SortTable(this)">Rating</th>
-    <th onclick="SortTable(this)">DVD release</th>
+    <th name="name" onclick="SortTable(this)">
+      <span class="desc">🠕</span>
+      <span class="asc">🠗</span>
+      Name</th>
+    <th onclick="SortTable(this)">
+      <span class="desc">🠕</span>
+      <span class="asc">🠗</span> Premiere date</th>
+    <th onclick="SortTable(this)">
+      <span class="desc">🠕</span>
+      <span class="asc">🠗</span>
+      Genre</th>
+    <th onclick="SortTable(this)">
+      <span class="desc"  >🠕</span>
+      <span class="asc">🠗</span>
+      Rating</th>
+
+    <th onclick="SortTable(this)">
+      <span class="desc">🠕</span>
+      <span class="asc">🠗</span>DVD release</th>
     <th></th>
   </table>
-  <script>console.log("finish")</script>
   </div>
   <div class="sidenav" >
   <form name="myForm" id="myForm" method=post>
