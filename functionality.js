@@ -34,9 +34,17 @@ function addInput(event) {
         alert("Date must be in mm/dd/yyyy form");
         return false;
     }
+
+    var divStar = document.getElementsByClassName("fa fa-star");
+    var contor = 0;
+    for (var i =0 ; i <divStar.length ; i++){
+        if(divStar[i].style.color == 'purple'){
+            contor++;
+        }
+    }
     var name = document.getElementById("fname").value;
     var date = document.getElementById("ldate").value;
-    var rating = document.getElementById("rating").value;
+    var rating = contor ;
     var genre =  getCheckboxvalues().join();
     var dvd = document.getElementById("dvd").checked;
 
@@ -58,7 +66,35 @@ function addInput(event) {
     clearForm();
 }
 
+function dateValidation() {
 
+    var date = document.getElementById("ldate").value
+    var patt = new RegExp("^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$");
+    var test = patt.test(date);
+    if (test == false) {
+        return false;
+    }
+
+    var parts = date.split("/");
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
+    var year = parseInt(parts[2], 10);
+
+    // Check the ranges of month and year
+    if (year < 1000 || year > 3000 || month == 0 || month > 12)
+        return false;
+
+    var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Adjust for leap years
+    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+
+    // Check the range of the day
+    return day > 0 && day <= monthLength[month - 1];
+
+
+}
 
 function InsertDataIntoTable(contor,table ,movie){
     
@@ -93,40 +129,9 @@ function DeleteRow(tableRowIndex , movieListIndex){
     movieList.pop();
     localStorage.setItem('myDataKey', JSON.stringify( movieList));
 
-
-
-
 }
 
-function dateValidation() {
 
-    var date = document.getElementById("ldate").value
-    var patt = new RegExp("^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$");
-    var test = patt.test(date);
-    if (test == false) {
-        return false;
-    }
-
-    var parts = date.split("/");
-    var day = parseInt(parts[0], 10);
-    var month = parseInt(parts[1], 10);
-    var year = parseInt(parts[2], 10);
-
-    // Check the ranges of month and year
-    if (year < 1000 || year > 3000 || month == 0 || month > 12)
-        return false;
-
-    var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-    // Adjust for leap years
-    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
-        monthLength[1] = 29;
-
-    // Check the range of the day
-    return day > 0 && day <= monthLength[month - 1];
-
-
-}
 
 function clearForm() {
     document.getElementById("myForm").reset();
@@ -159,27 +164,29 @@ function getCheckboxvalues() {
     return values;
 }
 
-function SortDirection (){
+function SortDirection (columnIndex){
 
     var spanAsc = document.getElementsByClassName("asc") ;
     var spanDesc = document.getElementsByClassName("desc") ;
-   if( getComputedStyle(spanAsc[0]).display == 'none'){
+   if( getComputedStyle(spanAsc[columnIndex]).display == 'none'){
       
     for(var i = 0; i < spanAsc.length; i++){
         
-        spanAsc[i].style.display = "inline"; 
+        spanAsc[i].style.display = "none"; 
         spanDesc[i].style.display = "none";
        }
+       spanAsc[columnIndex].style.display = "inline";
     return 'asc';
     } else
     {
    
     for(var i = 0; i < spanDesc.length; i++){
-        
-        spanDesc[i].style.display = "inline"; 
+       
+        spanDesc[i].style.display = "none"; 
         spanAsc[i].style.display = "none"; 
         
        }
+       spanDesc[columnIndex].style.display = "inline";
    return 'desc';
 }
 }
@@ -194,7 +201,7 @@ function SortTable(t){
    ColumnValue [3] = 'rating';
    ColumnValue [4] = 'dvd';
  
- movieList.sort(compareValues(ColumnValue[t.cellIndex] , SortDirection () ))
+ movieList.sort(compareValues(ColumnValue[t.cellIndex] , SortDirection (t.cellIndex) ))
    
     var table = document.getElementById("myTable");
     clearTable();
@@ -231,4 +238,15 @@ function clearTable(){
     {
         table.deleteRow(i);
     }
+}
+
+function CreateStars (t){
+var divStar = document.getElementsByClassName("fa fa-star");
+var index = t.getAttribute('name') ;
+for(var i =0 ; i < divStar.length ;i++)
+ if (i < index){
+  divStar[i].style.color ="purple";
+ } else {
+     divStar[i].style.color = "white";
+ }
 }
