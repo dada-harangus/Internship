@@ -4,6 +4,9 @@
 <head>
   <link rel="stylesheet" href="./styles.css">
   <script src="./functionality.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <title>Page Title</title>
 </head>
 
@@ -51,18 +54,13 @@
     <input type="checkbox" id="Thriller" name="ckb" value="thriller" onclick='chkcontrol(4)'>
     <label for="ckb"> It`s a thriller </label><br>
 
-    <!-- <label for="rating"> Rating (From 1 to 5) </label><br>
-    <input type="range" id="rating" name="rating" min="1" max="5"><br> <br> -->
-    <div class="container">
-      <br>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-      <span class="fa fa-star " name = 1 onmouseover="CreateStars(this)"></span>
-      <span class="fa fa-star " name = 2 onmouseover="CreateStars(this)"></span>
-      <span class="fa fa-star " name = 3  onmouseover="CreateStars(this)"></span>
-      <span class="fa fa-star " name = 4 onmouseover="CreateStars(this)"></span>
-      <span class="fa fa-star " name = 5 onmouseover="CreateStars(this)"></span>
-      <br>
+    <div class="star-container">
+      <span class="fa fa-star " id ="5" name ="1" onmouseover="selectStar(this)"></span>
+      <span class="fa fa-star"  id ="4" name ="2" onmouseover="selectStar(this)"></span>
+      <span class="fa fa-star"  id ="3" name ="3"  onmouseover="selectStar(this)"></span>
+      <span class="fa fa-star"  id ="2" name ="4" onmouseover="selectStar(this)"></span>
+      <span class="fa fa-star " id ="1" name ="5" onmouseover="selectStar(this)"></span>
    </div>
     <label for="dvd"> DVD release </label>
     <input type="checkbox" id="dvd" name="dvd" value="Yes">

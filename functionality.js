@@ -38,8 +38,10 @@ function addInput(event) {
     var divStar = document.getElementsByClassName("fa fa-star");
     var contor = 0;
     for (var i =0 ; i <divStar.length ; i++){
-        if(divStar[i].style.color == 'purple'){
-            contor++;
+       
+        if(divStar[i].className == 'fa fa-star fa-star-selected'){
+            contor = divStar[i].getAttribute('id') ;
+            console.log(contor);
         }
     }
     var name = document.getElementById("fname").value;
@@ -240,13 +242,17 @@ function clearTable(){
     }
 }
 
-function CreateStars (t){
+function selectStar(t){
+
+    
 var divStar = document.getElementsByClassName("fa fa-star");
+
 var index = t.getAttribute('name') ;
+
 for(var i =0 ; i < divStar.length ;i++)
- if (i < index){
-  divStar[i].style.color ="purple";
- } else {
-     divStar[i].style.color = "white";
+{
+   divStar[i].classList.remove('fa-star-selected');
  }
+divStar[index-1].classList.add('fa-star-selected');
+ 
 }

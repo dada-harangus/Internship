@@ -65,4 +65,21 @@ body {
    display: none ;
   }
 
- 
+.star-container{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+ .fa-star:hover {
+  color: red;
+ }
+ .fa-star:hover ~ .fa-star{
+  color: red;
+ }
+ .fa-star-selected {
+  color: yellow;
+ }
+ .fa-star-selected ~ .fa-star{
+  color: yellow;
+ }
