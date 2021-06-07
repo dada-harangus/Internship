@@ -1,9 +1,9 @@
-function Movie(id,name,date,rating, genre,dvd) {
+function Movie(id,name,date,genre,rating,dvd) {
     this.id = id,
     this.name = name;
     this.date = date;
-    this.rating = rating;
     this.genre = genre;
+    this.rating = rating;
     this.dvd = dvd;
   }
  var movieList =[];
@@ -116,7 +116,7 @@ function InsertDataIntoTable(contor,table ,movie){
         var button = document.createElement('button');
         button.innerHTML ="Delete";
         cell6.appendChild(button);
-        button.setAttribute('onclick','(DeleteRow('+row.rowIndex +', '+ contor + '))') ;
+        button.setAttribute('onclick','(DeleteRow('+ contor + '))') ;
         
 
         
@@ -124,12 +124,15 @@ function InsertDataIntoTable(contor,table ,movie){
 }
 
 
-function DeleteRow(tableRowIndex , movieListIndex){
+function DeleteRow( movieListIndex){
 
-    document.getElementById("myTable").deleteRow(tableRowIndex);
+   // document.getElementById("myTable").deleteRow(tableRowIndex);
     movieList.push(movieList.splice(movieListIndex, 1)[0]);
     movieList.pop();
+    clearTable();
     localStorage.setItem('myDataKey', JSON.stringify( movieList));
+    GetDataFromStorage();
+   
 
 }
 
@@ -218,11 +221,15 @@ function compareValues(key, order = 'asc') {
         return 0;
       }
   
-      const varA = (typeof a[key] === 'string')
+      var varA = (typeof a[key] === 'string')
         ? a[key].toUpperCase() : a[key];
-      const varB = (typeof b[key] === 'string')
+      var varB = (typeof b[key] === 'string')
         ? b[key].toUpperCase() : b[key];
-  
+     if(key =='date'){
+         varA = new Date(a[key]);
+         varB = new Date (b[key]);
+        
+     }
       let comparison = 0;
       if (varA > varB) {
         comparison = 1;
