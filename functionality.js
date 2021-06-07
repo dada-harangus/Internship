@@ -34,9 +34,6 @@ function addInput(event) {
         alert("Date must be in mm/dd/yyyy form");
         return false;
     }
-
-    
-    
     var name = document.getElementById("fname").value;
     var date = document.getElementById("ldate").value;
     var rating = document.getElementById("rating").value;
@@ -57,12 +54,7 @@ function addInput(event) {
         }
     }
     
-    
-
-    
-    
-    
-    localStorage.setItem('myDataKey', JSON.stringify( movieList));
+   localStorage.setItem('myDataKey', JSON.stringify( movieList));
     clearForm();
 }
 
@@ -177,17 +169,17 @@ function SortDirection (){
         
         spanAsc[i].style.display = "inline"; 
         spanDesc[i].style.display = "none";
-    }
+       }
     return 'asc';
-   } else
-   {
+    } else
+    {
    
     for(var i = 0; i < spanDesc.length; i++){
         
         spanDesc[i].style.display = "inline"; 
         spanAsc[i].style.display = "none"; 
         
-   }
+       }
    return 'desc';
 }
 }
@@ -198,13 +190,11 @@ function SortTable(t){
    let ColumnValue = new Map();
    ColumnValue [0] = 'name';
    ColumnValue [1] = 'date';
-   ColumnValue [2] = 'rating';
-   ColumnValue [3] = 'genre';
+   ColumnValue [2] = 'genre'
+   ColumnValue [3] = 'rating';
    ColumnValue [4] = 'dvd';
-   var counter = 1 ;
-
-
-   movieList.sort(compareValues(ColumnValue[t.cellIndex] , SortDirection () ))
+ 
+ movieList.sort(compareValues(ColumnValue[t.cellIndex] , SortDirection () ))
    
     var table = document.getElementById("myTable");
     clearTable();
