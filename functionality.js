@@ -21,8 +21,10 @@ function Movie(id,name,date,genre,rating,dvd) {
   } 
 }
 
-function addInput(event) {
-    event.preventDefault();
+function addInput(movieListIndex ,event) {
+  //  event.preventDefault();
+
+    
     
     var isFilled = document.getElementById("fname").value;
     if (isFilled == "") {
@@ -34,14 +36,16 @@ function addInput(event) {
         alert("Date must be in mm/dd/yyyy form");
         return false;
     }
-
+    if(movieListIndex != undefined){
+        DeleteRow(movieListIndex);
+    }
     var divStar = document.getElementsByClassName("fa fa-star");
     var contor = 0;
     for (var i =0 ; i <divStar.length ; i++){
        
         if(divStar[i].className == 'fa fa-star fa-star-selected'){
             contor = divStar[i].getAttribute('id') ;
-            console.log(contor);
+           
         }
     }
     var name = document.getElementById("fname").value;
@@ -78,8 +82,8 @@ function dateValidation() {
     }
 
     var parts = date.split("/");
-    var day = parseInt(parts[0], 10);
-    var month = parseInt(parts[1], 10);
+    var day = parseInt(parts[1], 10);
+    var month = parseInt(parts[0], 10);
     var year = parseInt(parts[2], 10);
 
     // Check the ranges of month and year
@@ -101,12 +105,15 @@ function dateValidation() {
 function InsertDataIntoTable(contor,table ,movie){
     
        var row = table.insertRow(contor+1);
+
+
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
         var cell4 = row.insertCell(3);
         var cell5 = row.insertCell(4);
         var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
     
         cell1.innerHTML = movie? movie.name : movieList[contor].name;
         cell2.innerHTML = movie? movie.date : movieList[contor].date;
@@ -117,6 +124,12 @@ function InsertDataIntoTable(contor,table ,movie){
         button.innerHTML ="Delete";
         cell6.appendChild(button);
         button.setAttribute('onclick','(DeleteRow('+ contor + '))') ;
+
+        var buttonEdit = document.createElement('button');
+        buttonEdit.innerHTML ="Edit";
+        cell7.appendChild(buttonEdit);
+        buttonEdit.setAttribute('onclick','(EditRow('+ contor + '))') ;
+        
         
 
         
@@ -262,4 +275,47 @@ for(var i =0 ; i < divStar.length ;i++)
  }
 divStar[index-1].classList.add('fa-star-selected');
  
+}
+
+function EditRow(movieListIndex){
+
+    var name = document.getElementById('fname');
+    var date = document.getElementById('ldate');
+    name.value = movieList[movieListIndex].name;
+    date.value = movieList[movieListIndex].date;
+
+    var genreArray = movieList[movieListIndex].genre.split(",");
+            var cbs = document.forms['myForm'].elements['ckb'];
+             
+    for (var i = 0; i < cbs.length ; i++) {
+        for (var y =0 ; y < genreArray.length  ; y ++){
+           
+            if(cbs[i].value == genreArray[y]){
+               cbs[i].checked = true;
+           }
+
+        }
+    }
+
+    var divStar = document.getElementsByClassName("fa fa-star");
+   
+    divStar[(parseInt (movieList[movieListIndex].rating ) -5) * -1].classList.add('fa-star-selected');        
+      var checkBoxDvd = document.getElementById('dvd');
+      if(movieList[movieListIndex].dvd == true){
+          checkBoxDvd.checked = true;
+      }       
+
+      var cancelButton = document.getElementById('cancel');
+      cancelButton.style.display ='inline';
+      var submitButton = document.getElementById('submit');
+      if(submitButton.clicked == true ){
+        addInput(movieListIndex)
+      }
+     
+      
+         
+   
+    
+    
+       
 }

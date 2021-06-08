@@ -83,3 +83,7 @@ body {
  .fa-star-selected ~ .fa-star{
   color: yellow;
  }
+
+ #cancel {
+   display: none;
+ }
