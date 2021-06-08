@@ -7,11 +7,8 @@ function Movie(id,name,date,genre,rating,dvd) {
     this.dvd = dvd;
   }
  var movieList =[];
- 
 
-// document.addEventListener('DOMContentLoaded', GetDataFromStorage(), false);
- 
- function GetDataFromStorage(){
+  function GetDataFromStorage(){
  
  if (localStorage.getItem('myDataKey') !== null) {
     movieList = JSON.parse(localStorage.getItem('myDataKey'));
@@ -21,12 +18,10 @@ function Movie(id,name,date,genre,rating,dvd) {
   } 
 }
 
-function addInput(movieListIndex ,event) {
+function addInput(movieListIndex ) {
   //  event.preventDefault();
 
-    
-    
-    var isFilled = document.getElementById("fname").value;
+   var isFilled = document.getElementById("fname").value;
     if (isFilled == "") {
         alert("Name must be provieded");
         return false;
@@ -105,8 +100,6 @@ function dateValidation() {
 function InsertDataIntoTable(contor,table ,movie){
     
        var row = table.insertRow(contor+1);
-
-
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
@@ -120,16 +113,18 @@ function InsertDataIntoTable(contor,table ,movie){
         cell3.innerHTML = movie? movie.genre :  movieList[contor].genre;
         cell4.innerHTML = movie? movie.rating :  movieList[contor].rating;
         cell5.innerHTML = movie? movie.dvd :  movieList[contor].dvd;
-        var button = document.createElement('button');
-        button.innerHTML ="Delete";
-        cell6.appendChild(button);
-        button.setAttribute('onclick','(DeleteRow('+ contor + '))') ;
+        var buttonDelete = document.createElement('button');
+        buttonDelete.innerHTML ="Delete";
+        cell6.appendChild(buttonDelete);
+        buttonDelete.setAttribute('onclick','(DeleteRow('+ contor + '))') ;
 
         var buttonEdit = document.createElement('button');
         buttonEdit.innerHTML ="Edit";
         cell7.appendChild(buttonEdit);
         buttonEdit.setAttribute('onclick','(EditRow('+ contor + '))') ;
         
+        buttonDelete.classList.add('button');
+        buttonEdit.classList.add('button');
         
 
         
