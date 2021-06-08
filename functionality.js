@@ -122,11 +122,9 @@ function InsertDataIntoTable(contor,table ,movie){
         buttonEdit.innerHTML ="Edit";
         cell7.appendChild(buttonEdit);
         buttonEdit.setAttribute('onclick','(EditRow('+ contor + '))') ;
-        
+        row.setAttribute('ondblclick','(EditRow('+ contor + '))');
         buttonDelete.classList.add('button');
         buttonEdit.classList.add('button');
-        
-
         
 
 }
@@ -134,17 +132,12 @@ function InsertDataIntoTable(contor,table ,movie){
 
 function DeleteRow( movieListIndex){
 
-   // document.getElementById("myTable").deleteRow(tableRowIndex);
     movieList.push(movieList.splice(movieListIndex, 1)[0]);
     movieList.pop();
     clearTable();
     localStorage.setItem('myDataKey', JSON.stringify( movieList));
     GetDataFromStorage();
-   
-
-}
-
-
+   }
 
 function clearForm() {
     document.getElementById("myForm").reset();
@@ -308,9 +301,4 @@ function EditRow(movieListIndex){
       }
      
       
-         
-   
-    
-    
-       
 }
