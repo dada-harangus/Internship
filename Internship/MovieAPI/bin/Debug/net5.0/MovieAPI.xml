@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MovieAPI</name>
+    </assembly>
+    <members>
+        <member name="M:MovieAPI.Controllers.GenreController.GetAllGenres">
+            <summary>
+            Gets all the genres
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MovieAPI.Controllers.MoviesController.GetAllMovies">
+            <summary>
+            Gets all the movies
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MovieAPI.Controllers.MoviesController.SaveMovie(MovieLibrary.Dto.MovieDto)">
+            <summary>
+            Saves a new movie
+            </summary>
+            <param name="movie">the movie that needs to be saved</param>
+            <returns></returns>
+        </member>
+        <member name="M:MovieAPI.Controllers.MoviesController.EditMovie(MovieLibrary.Models.MovieModel)">
+            <summary>
+            Updates a movie 
+            </summary>
+            <param name="movie"></param>
+        </member>
+        <member name="M:MovieAPI.Controllers.MoviesController.DeleteMovie(System.Int32)">
+            <summary>
+            Deletes a movie 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

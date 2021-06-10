@@ -1,0 +1,12 @@
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\bin\Debug\net5.0\MovieLibrary.deps.json
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\bin\Debug\net5.0\MovieLibrary.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\bin\Debug\net5.0\ref\MovieLibrary.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\bin\Debug\net5.0\MovieLibrary.pdb
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.csprojAssemblyReference.cache
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.AssemblyInfoInputs.cache
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.AssemblyInfo.cs
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.csproj.CoreCompileInputs.cache
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\ref\MovieLibrary.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieLibrary\obj\Debug\net5.0\MovieLibrary.pdb

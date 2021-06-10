@@ -265,7 +265,8 @@ divStar[index-1].classList.add('fa-star-selected');
  
 }
 
-function EditRow(movieListIndex){
+function EditRow(movieListIndex,row){
+   row.
 
     var name = document.getElementById('fname');
     var date = document.getElementById('ldate');

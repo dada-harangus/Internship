@@ -1,0 +1,15 @@
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\bin\Debug\net5.0\MovieLibrary.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.csprojAssemblyReference.cache
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.AssemblyInfoInputs.cache
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.AssemblyInfo.cs
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\bin\Debug\net5.0\MovieDAL.deps.json
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\bin\Debug\net5.0\MovieDAL.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\bin\Debug\net5.0\ref\MovieDAL.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\bin\Debug\net5.0\MovieDAL.pdb
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\bin\Debug\net5.0\MovieLibrary.pdb
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.csproj.CoreCompileInputs.cache
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.csproj.CopyComplete
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\ref\MovieDAL.dll
+C:\Users\AndradaHarangus\Desktop\Internship\Internship\MovieDAL\obj\Debug\net5.0\MovieDAL.pdb

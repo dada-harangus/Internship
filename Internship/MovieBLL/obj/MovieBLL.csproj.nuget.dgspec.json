@@ -1,0 +1,191 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieBLL\\MovieBLL.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieBLL\\MovieBLL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieBLL\\MovieBLL.csproj",
+        "projectName": "MovieBLL",
+        "projectPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieBLL\\MovieBLL.csproj",
+        "packagesPath": "C:\\Users\\AndradaHarangus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieBLL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\AndradaHarangus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieDAL\\MovieDAL.csproj": {
+                "projectPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieDAL\\MovieDAL.csproj"
+              },
+              "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj": {
+                "projectPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieDAL\\MovieDAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieDAL\\MovieDAL.csproj",
+        "projectName": "MovieDAL",
+        "projectPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieDAL\\MovieDAL.csproj",
+        "packagesPath": "C:\\Users\\AndradaHarangus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieDAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\AndradaHarangus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj": {
+                "projectPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj",
+        "projectName": "MovieLibrary",
+        "projectPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\MovieLibrary.csproj",
+        "packagesPath": "C:\\Users\\AndradaHarangus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AndradaHarangus\\Desktop\\Internship\\Internship\\MovieLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\AndradaHarangus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
