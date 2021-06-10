@@ -168,7 +168,7 @@ namespace MovieDAL.Repositories
 
                 if(movie.GenreList.Count > genreList.Count)
                 {
-                    var DiffList = movieModel.GenreList.Except(genreList);
+                    var DiffList = movie.GenreList.Except(genreList);
                     string queryForAddingGenre = "Insert into movie_genre_junction (movieId ,genreId) Values (@movieId, @genreId)";
                     foreach (GenreModel g in DiffList)
                     {
@@ -227,17 +227,7 @@ namespace MovieDAL.Repositories
                     rowsAffected = count > 0;
                    
                 }
-                if (rowsAffected == true)
-                {
-                    string deleteJunction = "Delete from movie_genre_junction where movieId = @id";
-                    using (SqlCommand command = new SqlCommand(deleteJunction, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", id);
-
-                        command.ExecuteNonQuery();
-                        
-                    }
-                }
+               
                 return rowsAffected;
             }
             
