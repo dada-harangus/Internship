@@ -48,7 +48,7 @@ namespace MovieBLL.Services
             foreach (GenreModel g in movie.GenreList) MovieGenreRepository.AddMovieGenre(idInsertedMovie, idInsertedGenre);
 
         }
-
+        //needs testing
         public void EditMovie(MovieModel movie)
         {
            
@@ -57,7 +57,7 @@ namespace MovieBLL.Services
             List<int> DiffAdd = ListIdGenreNewMovie.Except(ListIdGenreOldMovie).ToList();
             List<int> DiffDelete = ListIdGenreOldMovie.Except(ListIdGenreNewMovie).ToList();
             foreach (int id in DiffAdd) MovieGenreRepository.AddMovieGenre(movie.MovieId, id);
-            foreach (int id in DiffAdd) MovieGenreRepository.DeleteMovieGenreConnection(movie.MovieId, id);
+            foreach (int id in DiffDelete) MovieGenreRepository.DeleteMovieGenreConnection(movie.MovieId, id);
             MoviesRepository.Edit(movie);
             
         }
