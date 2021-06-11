@@ -33,9 +33,9 @@ namespace MovieAPI.Controllers
         /// <param name="movie">the movie that needs to be saved</param>
         /// <returns></returns>
         [HttpPost]
-        public int SaveMovie(MovieDto movie)
+        public void SaveMovie(MovieDto movie)
         {
-            return MoviesService.SaveMovie(movie);
+             MoviesService.SaveMovie(movie);
         }
 
         /// <summary>

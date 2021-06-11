@@ -1,4 +1,6 @@
-﻿using MovieLibrary.Models;
+﻿using Microsoft.Extensions.Options;
+using MovieLibrary;
+using MovieLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,37 +13,84 @@ namespace MovieDAL.Repositories.Interfaces
     public class GenreRepository : IGenreRepository
     {
 
-        private string stringConnection = "Server=tcp:andradadbserver.database.windows.net,1433;" +
-                "Initial Catalog=MovieDb;Persist Security Info=False;User ID=admin123;Password=andrada123!" +
-                ";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
-        public GenreRepository()
+        private ConectionString connectionString { get; }
+        public GenreRepository(IOptions<ConectionString> connectionString)
         {
-
+            this.connectionString = connectionString.Value;
         }
         public List<GenreModel> GetAll()
         {
-            List< GenreModel> GenreList = new List<GenreModel>();
+            List<GenreModel> GenreList = new List<GenreModel>();
 
-            var connection = new SqlConnection(stringConnection);
-            connection.Open();
-            string queryString = "SELECT * FROM GENRE;";
-            SqlCommand command = new SqlCommand(queryString, connection);
-            SqlDataReader reader = command.ExecuteReader();
-            //var check = connection.State == ConnectionState.Open; 
-            while (reader.Read())
+            using (var connection = new SqlConnection(connectionString.Setting1))
             {
+                connection.Open();
+                string queryString = "SELECT * FROM GENRE;";
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                //var check = connection.State == ConnectionState.Open; 
+                while (reader.Read())
+                {
 
-                GenreModel genre = new GenreModel();
-                genre.GenreId = Int32.Parse(reader["genreId"].ToString());
-                genre.GenreName = reader["GenreName"].ToString();
+                    GenreModel genre = new GenreModel();
+                    genre.GenreId = Int32.Parse(reader["genreId"].ToString());
+                    genre.GenreName = reader["GenreName"].ToString();
 
-                GenreList.Add(genre);
+                    GenreList.Add(genre);
 
+                }
             }
-            reader.Close();
-            connection.Close();
             return GenreList;
         }
+
+
+        public List<GenreModel> GetAllGenrePerMovie(int id)
+        {
+            List<GenreModel> genreList = new List<GenreModel>();
+            string queryStringForGenreList = @"Select * from Genre 
+                                              Where GenreId = @id ";
+
+            using (var connection = new SqlConnection(connectionString.Setting1))
+            {
+                connection.Open();
+                using (SqlCommand commandGenre = new SqlCommand(queryStringForGenreList, connection))
+                {
+                    commandGenre.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader readerForGenreList = commandGenre.ExecuteReader())
+                    {
+                        while (readerForGenreList.Read())
+                        {
+                            GenreModel genre = new GenreModel();
+                            genre.GenreId = Convert.ToInt32(readerForGenreList["GenreId"]);
+                            genre.GenreName = readerForGenreList["GenreName"].ToString();
+                            genreList.Add(genre);
+                        }
+                    }
+                }
+            }
+            return genreList;
+
+        }
+
+        public int AddGenre(GenreModel foundGenre)
+        {
+            using (var connection = new SqlConnection(connectionString.Setting1))
+            {
+                connection.Open();
+                string addGenre = @" Insert into genre (genreName)
+                                     values (@GenreName)
+                                     SELECT SCOPE_IDENTITY();   ";
+                using (SqlCommand commandGenre = new SqlCommand(addGenre, connection))
+                {
+                    commandGenre.Parameters.AddWithValue("@GenreName", foundGenre.GenreName);
+                    int idInserted =Convert.ToInt32 (commandGenre.ExecuteScalar());
+                    return idInserted;
+                }
+
+            }
+
+        }
+
+
     }
 }

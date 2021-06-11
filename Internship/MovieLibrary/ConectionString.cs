@@ -1,6 +1,6 @@
 ﻿namespace MovieLibrary
 {
-    public class CustomApplicationSettings
+    public class ConectionString
     {
         public string Setting1 { get; set; }
     }

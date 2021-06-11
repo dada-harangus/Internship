@@ -49,8 +49,9 @@ namespace MovieAPI
             services.AddScoped(typeof(IMoviesRepository), typeof(MoviesRepository));
             services.AddScoped(typeof(GenreService));
             services.AddScoped(typeof(IGenreRepository), typeof(GenreRepository));
+            services.AddScoped(typeof(IMovieGenreRepository), typeof(MovieGenreRepository));
 
-            services.Configure<CustomApplicationSettings>(Configuration.GetSection("CustomApplicationSettings"));
+            services.Configure<ConectionString>(Configuration.GetSection("ConectionString"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
