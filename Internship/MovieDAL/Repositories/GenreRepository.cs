@@ -44,12 +44,12 @@ namespace MovieDAL.Repositories.Interfaces
         }
 
 
-        public List<GenreModel> GetAllGenrePerMovie(int id)
+        public GenreModel GetGendre(int id)
         {
-            List<GenreModel> genreList = new List<GenreModel>();
+
             string queryStringForGenreList = @"Select * from Genre 
                                               Where GenreId = @id ";
-
+            GenreModel genre = new GenreModel();
             using (var connection = new SqlConnection(connectionString.Setting1))
             {
                 connection.Open();
@@ -60,15 +60,15 @@ namespace MovieDAL.Repositories.Interfaces
                     {
                         while (readerForGenreList.Read())
                         {
-                            GenreModel genre = new GenreModel();
+                            
                             genre.GenreId = Convert.ToInt32(readerForGenreList["GenreId"]);
                             genre.GenreName = readerForGenreList["GenreName"].ToString();
-                            genreList.Add(genre);
+                            
                         }
                     }
                 }
             }
-            return genreList;
+            return genre;
 
         }
 
@@ -83,7 +83,7 @@ namespace MovieDAL.Repositories.Interfaces
                 using (SqlCommand commandGenre = new SqlCommand(addGenre, connection))
                 {
                     commandGenre.Parameters.AddWithValue("@GenreName", foundGenre.GenreName);
-                    int idInserted =Convert.ToInt32 (commandGenre.ExecuteScalar());
+                    int idInserted = Convert.ToInt32(commandGenre.ExecuteScalar());
                     return idInserted;
                 }
 
@@ -91,6 +91,6 @@ namespace MovieDAL.Repositories.Interfaces
 
         }
 
-
+       
     }
 }

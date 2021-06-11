@@ -55,7 +55,7 @@ namespace MovieDAL.Repositories
 
         }
 
-        public List<int> GetAllGenrePerMovieIds(int idMovie)
+        public List<int> GetAllGenresPerMovieId(int idMovie)
         {
             List<int> idList = new List<int>();
             using (var connection = new SqlConnection(connectionString.Setting1))

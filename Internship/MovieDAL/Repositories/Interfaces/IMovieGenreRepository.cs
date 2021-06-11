@@ -14,7 +14,7 @@ namespace MovieDAL.Repositories.Interfaces
         void AddMovieGenre( int idMovie, int idGenre );
         void DeleteMovieGenreConnection(int idMovie , int idGenre);
 
-        List<int> GetAllGenrePerMovieIds(int idMovie);
+        List<int> GetAllGenresPerMovieId(int idMovie);
 
 
 
