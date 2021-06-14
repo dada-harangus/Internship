@@ -19,11 +19,12 @@ function GetDataFromStorage() {
         url: "https://localhost:44370/api/movies/GetAllMovies",
         method: "GET",
         data: { format: 'json' },
-        // contentType: "application/json",
+        
     });
     promise.then(function (data) {
         console.log(data);
         movieList = data;
+        clearForm();
         clearTable();
         for (var i = 0; i < data.length; i++)
             InsertDataIntoTable(i, table, data[i]);
@@ -76,7 +77,7 @@ function addInput(event, movieListIndex) {
             data: JSON.stringify({
                 name: document.getElementById("fname").value,
                 releaseDate: new Date(document.getElementById("ldate").value),
-                rating: contor,
+                rating: 0,
                 releasedOnDvd: document.getElementById("dvd").checked,
                 genreList: getCheckboxvalues()
             }),
@@ -85,11 +86,13 @@ function addInput(event, movieListIndex) {
     }
 
     promise.then(function () {
-        clearForm();
-        clearTable();
         GetDataFromStorage();
-    }, function () {
-        console.log("error la save/edit");
+    }, function (error) {
+        if (error.responseJSON.errors["Rating"] != undefined){
+            alert(error.responseJSON.errors["Rating"]);
+        }
+       
+       
     });
 }
 
@@ -136,7 +139,7 @@ function InsertDataIntoTable(contor, table, movie) {
 
     cell1.innerHTML = movie ? movie.name : movieList[contor].name;
     cell2.innerHTML = movie ? movie.releaseDate : movieList[contor].date;
-
+   //aici o sa pice la sortare 
     for (var i = 0; i < movie.genreList.length; i++) {
         cell3.innerHTML += ' ' + movie.genreList[i].genreName.toString();
     }
