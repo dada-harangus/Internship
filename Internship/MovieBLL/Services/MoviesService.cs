@@ -37,9 +37,10 @@ namespace MovieBLL.Services
             List<GenreModel> allGenres = GenreRepository.GetAll();
             int idInsertedGenre = 0;
             int idInsertedMovie = MoviesRepository.Save(movie);
-            foreach (GenreModel genre in movie.GenreList)
+            
+            foreach (string genre in movie.GenreList)
             {
-                GenreModel foundGenre = allGenres.Find(g => g.GenreName == genre.GenreName);
+                GenreModel foundGenre = allGenres.Find(g => g.GenreName == genre.ToUpper());
                 if (foundGenre == null)
                 {
                     idInsertedGenre = GenreRepository.AddGenre(genre);
@@ -48,16 +49,27 @@ namespace MovieBLL.Services
                 }
                 else
                 {
-                    idInsertedGenre = foundGenre.GenreId;
+                    idInsertedGenre = foundGenre.GenreId ;
                     MovieGenreRepository.AddMovieGenre(idInsertedMovie, idInsertedGenre);
                 }
             }
         }
+
+
+      
         // For Stefan : in edit  can you  add a new genre ?  
-        public void EditMovie(MovieModel movie)
+        public void UpdateMovie(MovieDto movie)
         {
 
-            List<int> ListIdGenreNewMovie = movie.GenreList.Select(x => x.GenreId).ToList();
+            List<int> ListIdGenreNewMovie = new List<int>();
+            foreach (string s in movie.GenreList)
+            {
+                var genreFound = GenreRepository.GetAll().Find(g => g.GenreName == s.ToUpper());
+                if ( genreFound != null)
+                {
+                    ListIdGenreNewMovie.Add(genreFound.GenreId);
+                }
+            }
             List<int> ListIdGenreOldMovie = MovieGenreRepository.GetAllGenresPerMovieId(movie.MovieId);
             List<int> DiffAdd = ListIdGenreNewMovie.Except(ListIdGenreOldMovie).ToList();
             List<int> DiffDelete = ListIdGenreOldMovie.Except(ListIdGenreNewMovie).ToList();
@@ -72,14 +84,14 @@ namespace MovieBLL.Services
             }
             foreach (int id in DiffAdd) MovieGenreRepository.AddMovieGenre(movie.MovieId, id);
             foreach (int id in DiffDelete) MovieGenreRepository.DeleteMovieGenreConnection(movie.MovieId, id);
-            MoviesRepository.Edit(movie);
+            MoviesRepository.Update(movie);
 
         }
 
 
-        public bool DeleteMovie(int id)
+        public bool DeleteMovie(int movieId)
         {
-            return MoviesRepository.Delete(id);
+            return MoviesRepository.Delete(movieId);
         }
 
     }

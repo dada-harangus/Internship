@@ -87,3 +87,6 @@ body {
  #cancel {
    display: none;
  }
+ #submitEdit {
+   display: none;
+ }

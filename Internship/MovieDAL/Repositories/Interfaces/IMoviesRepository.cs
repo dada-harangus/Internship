@@ -9,7 +9,7 @@ namespace MovieDAL.Repositories
         public List<MovieModel> GetAll();
         public int Save(MovieDto model);
 
-        public void Edit(MovieModel movieModel);
+        public void Update(MovieDto movieModel);
 
         public bool Delete(int id);
     }

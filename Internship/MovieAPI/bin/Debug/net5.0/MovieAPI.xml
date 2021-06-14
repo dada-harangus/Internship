@@ -23,7 +23,7 @@
             <param name="movie">the movie that needs to be saved</param>
             <returns></returns>
         </member>
-        <member name="M:MovieAPI.Controllers.MoviesController.EditMovie(MovieLibrary.Models.MovieModel)">
+        <member name="M:MovieAPI.Controllers.MoviesController.UpdateMovie(MovieLibrary.Dto.MovieDto)">
             <summary>
             Updates a movie 
             </summary>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MovieAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
@@ -43,9 +43,9 @@ namespace MovieAPI.Controllers
         /// </summary>
         /// <param name="movie"></param>
         [HttpPut]
-        public void EditMovie(MovieModel movie)
+        public void UpdateMovie(MovieDto movie)
         {
-             MoviesService.EditMovie(movie);
+             MoviesService.UpdateMovie(movie);
         }
 
 
@@ -55,9 +55,9 @@ namespace MovieAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public bool DeleteMovie(int id)
+        public bool DeleteMovie(int movieId)
         {
-            return MoviesService.DeleteMovie(id);
+            return MoviesService.DeleteMovie(movieId);
         }
     }
 }

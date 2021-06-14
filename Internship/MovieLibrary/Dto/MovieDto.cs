@@ -8,20 +8,21 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Dto
 {
-  public  class MovieDto 
+    public class MovieDto
     {
+        public int MovieId { get; set; }
         [Required(ErrorMessage = "An movie name  is required")]
         public string Name { get; set; }
 
-        [DateAttribute] 
+        [DateAttribute]
         public DateTime ReleaseDate { get; set; }
-        [Range(0,5,
+        [Range(1, 5,
             ErrorMessage = "Rating must be between 0 and 5")]
         public int Rating { get; set; }
         public bool ReleasedOnDvd { get; set; }
 
-        public List<GenreModel> GenreList { get; set; } = new List<GenreModel>();
+        public List<string> GenreList { get; set; } = new List<string>();
 
-        
+
     }
 }

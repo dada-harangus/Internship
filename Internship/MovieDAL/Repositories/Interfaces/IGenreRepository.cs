@@ -11,7 +11,7 @@ namespace MovieDAL.Repositories.Interfaces
     {
         public List<GenreModel> GetAll();
         
-        int AddGenre(GenreModel foundGenre);
+        int AddGenre(string foundGenre);
         GenreModel GetGendre(int idMovie);
         
     }

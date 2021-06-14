@@ -84,7 +84,7 @@ namespace MovieDAL.Repositories
                 return idInserted;
             }
         }
-        public void Edit(MovieModel movieModel)
+        public void Update(MovieDto movieModel)
         {
             if (movieModel == null)
             {

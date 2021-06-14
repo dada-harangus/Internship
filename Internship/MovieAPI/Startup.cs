@@ -44,7 +44,7 @@ namespace MovieAPI
                 //... and tell Swagger to use those XML comments.
                 c.IncludeXmlComments(xmlPath);
             });
-
+            services.AddCors();
             services.AddScoped(typeof(MoviesService));
             services.AddScoped(typeof(IMoviesRepository), typeof(MoviesRepository));
             services.AddScoped(typeof(GenreService));
@@ -52,6 +52,7 @@ namespace MovieAPI
             services.AddScoped(typeof(IMovieGenreRepository), typeof(MovieGenreRepository));
 
             services.Configure<ConectionString>(Configuration.GetSection("ConectionString"));
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +70,10 @@ namespace MovieAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true));
 
             app.UseEndpoints(endpoints =>
             {

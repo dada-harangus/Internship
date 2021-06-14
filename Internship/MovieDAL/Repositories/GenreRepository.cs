@@ -72,7 +72,7 @@ namespace MovieDAL.Repositories.Interfaces
 
         }
 
-        public int AddGenre(GenreModel foundGenre)
+        public int AddGenre(string foundGenre)
         {
             using (var connection = new SqlConnection(connectionString.Setting1))
             {
@@ -82,7 +82,7 @@ namespace MovieDAL.Repositories.Interfaces
                                      SELECT SCOPE_IDENTITY();   ";
                 using (SqlCommand commandGenre = new SqlCommand(addGenre, connection))
                 {
-                    commandGenre.Parameters.AddWithValue("@GenreName", foundGenre.GenreName);
+                    commandGenre.Parameters.AddWithValue("@GenreName", foundGenre);
                     int idInserted = Convert.ToInt32(commandGenre.ExecuteScalar());
                     return idInserted;
                 }
