@@ -15,20 +15,20 @@ function GetDataFromStorage() {
     var submitButton = document.getElementById('submitEdit');
     submitButton.style.display = 'none';
     var table = document.getElementById("myTable");
-    $.ajax({
-        url:"https://localhost:44370/api/movies/GetAllMovies",
-        method:"GET",
-        data:{ format :'json'},
+    promise = $.ajax({
+        url: "https://localhost:44370/api/movies/GetAllMovies",
+        method: "GET",
+        data: { format: 'json' },
         // contentType: "application/json",
-        succes: function (data) {
-            console.log(data);
+    });
+    promise.then(function (data) {
+        console.log(data);
         movieList = data;
         clearTable();
         for (var i = 0; i < data.length; i++)
             InsertDataIntoTable(i, table, data[i]);
-        console.log(data);
-    }
-});
+
+    });
 }
 
 function addInput(event, movieListIndex) {
@@ -84,7 +84,7 @@ function addInput(event, movieListIndex) {
         });
     }
 
-    promise.then(function() {
+    promise.then(function () {
         clearForm();
         clearTable();
         GetDataFromStorage();
@@ -162,16 +162,17 @@ function InsertDataIntoTable(contor, table, movie) {
 
 
 function DeleteRow(movieListIndex) {
-    promise =  $.ajax({
+    promise = $.ajax({
         method: "DELETE",
         url: "https://localhost:44370/api/movies/DeleteMovie?movieId=" + movieList[movieListIndex].movieId,
 
         contentType: "application/json"
 
     });
-    promise.then(function(){
-    clearTable();
-    GetDataFromStorage()});
+    promise.then(function () {
+        clearTable();
+        GetDataFromStorage()
+    });
 }
 
 function clearForm() {
