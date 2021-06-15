@@ -21,15 +21,27 @@ namespace MovieBLL.Services
             MovieGenreRepository = movieGenreRepository;
         }
 
-        public List<MovieModel> GetAll()
+        public List<MovieModel> GetAll(int pageNumber, int pageSize = 5 )
+
         {
-            List<MovieModel> movies = MoviesRepository.GetAll();
+            if (pageNumber < 1) pageNumber = 1;
+            var totalpages = MoviesRepository.GetAll().Count / pageSize + 1;
+            if (pageNumber > totalpages) pageNumber = totalpages;
+            List<MovieModel> movies = MoviesRepository.GetAll()
+                                     .Skip((pageNumber-1)* pageSize)
+                                     .Take(pageSize).ToList();
             foreach (MovieModel m in movies)
             {
                 List<int> genderIds = MovieGenreRepository.GetAllGenresPerMovieId(m.MovieId);
                 foreach (int id in genderIds) m.GenreList.Add(GenreRepository.GetGendre(id));
             }
             return movies;
+        }
+
+        public int GetTotalPages(int pageSize = 5)
+        {
+            var totalpages = MoviesRepository.GetAll().Count / pageSize + 1;
+            return totalpages;
         }
 
         public void SaveMovie(MovieDto movie)

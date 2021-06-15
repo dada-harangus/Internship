@@ -7,19 +7,30 @@ function Movie(id, name, date, genre, rating, dvd) {
     this.dvd = dvd;
 }
 var movieList = [];
-
+var pageCounter = 1;
+var totalPages;
 function GetDataFromStorage() {
+    
     var submitButton = document.getElementById('submit');
     submitButton.style.display = 'inline';
 
     var submitButton = document.getElementById('submitEdit');
     submitButton.style.display = 'none';
+    promise = $.ajax({
+        url:"https://localhost:44370/api/movies/GetTotalPages",
+        method: "Get",
+        data :{format :'json'},
+    });
+    promise.then(function(response){
+        totalPages = response;
+    })
+
     var table = document.getElementById("myTable");
     promise = $.ajax({
-        url: "https://localhost:44370/api/movies/GetAllMovies",
+        url: "https://localhost:44370/api/movies/GetAllMovies?pageNumber="+pageCounter,
         method: "GET",
         data: { format: 'json' },
-        
+
     });
     promise.then(function (data) {
         console.log(data);
@@ -31,7 +42,16 @@ function GetDataFromStorage() {
 
     });
 }
-
+function addPageNumber(){
+ pageCounter++;
+ if (pageCounter > totalPages) pageCounter = totalPages;
+ GetDataFromStorage();
+}
+function substractPageNumber(){
+    pageCounter--;
+    if(pageCounter <1 ) pageCounter =1;
+    GetDataFromStorage();
+}
 function addInput(event, movieListIndex) {
     event.preventDefault();
 
@@ -75,9 +95,9 @@ function addInput(event, movieListIndex) {
             method: "POST",
             url: "https://localhost:44370/api/movies/SaveMovie",
             data: JSON.stringify({
-                name: document.getElementById("fname").value,
-                releaseDate: new Date(document.getElementById("ldate").value),
-                rating: 0,
+                name:  document.getElementById("fname").value,
+               releaseDate: new Date(document.getElementById("ldate").value),
+                rating: contor,
                 releasedOnDvd: document.getElementById("dvd").checked,
                 genreList: getCheckboxvalues()
             }),
@@ -88,11 +108,12 @@ function addInput(event, movieListIndex) {
     promise.then(function () {
         GetDataFromStorage();
     }, function (error) {
-        if (error.responseJSON.errors["Rating"] != undefined){
-            alert(error.responseJSON.errors["Rating"]);
-        }
-       
-       
+        
+            alert(JSON.stringify( error.responseJSON.errors));
+    
+        
+
+
     });
 }
 
@@ -139,7 +160,7 @@ function InsertDataIntoTable(contor, table, movie) {
 
     cell1.innerHTML = movie ? movie.name : movieList[contor].name;
     cell2.innerHTML = movie ? movie.releaseDate : movieList[contor].date;
-   //aici o sa pice la sortare 
+    //aici o sa pice la sortare 
     for (var i = 0; i < movie.genreList.length; i++) {
         cell3.innerHTML += ' ' + movie.genreList[i].genreName.toString();
     }
@@ -167,14 +188,19 @@ function InsertDataIntoTable(contor, table, movie) {
 function DeleteRow(movieListIndex) {
     promise = $.ajax({
         method: "DELETE",
-        url: "https://localhost:44370/api/movies/DeleteMovie?movieId=" + movieList[movieListIndex].movieId,
+        url: "https://localhost:44370/api/movies/DeleteMovie?movieId="+ movieList[movieListIndex].movieId,
 
         contentType: "application/json"
 
     });
-    promise.then(function () {
-        clearTable();
-        GetDataFromStorage()
+    promise.then(function (response) {
+        if (response == false){
+            alert("The movie was not deleted/found");
+        }
+       clearTable();
+       GetDataFromStorage()
+    }, function (error) {
+       
     });
 }
 

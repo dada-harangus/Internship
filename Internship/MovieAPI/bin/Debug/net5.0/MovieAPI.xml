@@ -10,7 +10,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:MovieAPI.Controllers.MoviesController.GetAllMovies">
+        <member name="M:MovieAPI.Controllers.MoviesController.GetAllMovies(System.Int32,System.Int32)">
             <summary>
             Gets all the movies
             </summary>

@@ -22,9 +22,14 @@ namespace MovieAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public List<MovieModel> GetAllMovies()
+        public List<MovieModel> GetAllMovies(int pageNumber, int pageSize = 5)
         {
-            return MoviesService.GetAll();
+            return MoviesService.GetAll(pageNumber,pageSize);
+        }
+        [HttpGet]
+        public int GetTotalPages()
+        {
+            return MoviesService.GetTotalPages();
         }
 
         /// <summary>
