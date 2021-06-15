@@ -6,26 +6,39 @@ using System.Collections.Generic;
 
 namespace MovieAPI.Controllers
 {
+
+    /// <summary>
+    /// Controller for movie entity 
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+
     public class MoviesController : ControllerBase
     {
         private MoviesService MoviesService { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="moviesService"></param>
         public MoviesController(MoviesService moviesService)
         {
             MoviesService = moviesService;
         }
 
         /// <summary>
-        /// Gets all the movies
+        /// Gets all the movies paginated
         /// </summary>
         /// <returns></returns>
+
         [HttpGet]
-        public List<MovieModel> GetAllMovies(int pageNumber, int pageSize = 5)
+        public List<MovieModel> GetAllPagination(int pageNumber, string sortParameter = "Name", int pageSize = 5, string direction = "ASC")
         {
-            return MoviesService.GetAll(pageNumber,pageSize);
+            return MoviesService.GetAllPagination(pageNumber, sortParameter, pageSize, direction);
         }
+        /// <summary>
+        /// Gets the total numbers of pages needed 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public int GetTotalPages()
         {
@@ -40,7 +53,7 @@ namespace MovieAPI.Controllers
         [HttpPost]
         public void SaveMovie(MovieDto movie)
         {
-             MoviesService.SaveMovie(movie);
+            MoviesService.SaveMovie(movie);
         }
 
         /// <summary>
@@ -50,14 +63,14 @@ namespace MovieAPI.Controllers
         [HttpPut]
         public void UpdateMovie(MovieDto movie)
         {
-             MoviesService.UpdateMovie(movie);
+            MoviesService.UpdateMovie(movie);
         }
 
 
         /// <summary>
         /// Deletes a movie 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="movieId"></param>
         /// <returns></returns>
         [HttpDelete]
         public bool DeleteMovie(int movieId)

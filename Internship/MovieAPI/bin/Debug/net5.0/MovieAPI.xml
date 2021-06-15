@@ -10,9 +10,9 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:MovieAPI.Controllers.MoviesController.GetAllMovies(System.Int32,System.Int32)">
+        <member name="M:MovieAPI.Controllers.MoviesController.GetAllPagination(System.Int32,System.String,System.Int32,System.String)">
             <summary>
-            Gets all the movies
+            Gets all the movies paginated
             </summary>
             <returns></returns>
         </member>

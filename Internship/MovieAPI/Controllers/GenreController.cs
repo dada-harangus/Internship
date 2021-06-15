@@ -8,13 +8,18 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MovieAPI.Controllers
-{
+{ /// <summary>
+  /// Controller for genre entity 
+  /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class GenreController : ControllerBase
     {
         private GenreService GenreService { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="genreService"></param>
         public GenreController(GenreService genreService)
         {
             GenreService = genreService;

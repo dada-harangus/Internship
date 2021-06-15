@@ -24,18 +24,25 @@ namespace MovieDAL.Repositories
 
 
 
-        public List<MovieModel> GetAll()
+        public List<MovieModel> GetAllPagination(int pageNumber, string sortParameter = "Name" , string direction = "ASC",int PageSize = 5)
         {
             List<MovieModel> movieList = new List<MovieModel>();
-
+            var rowsSkip = (pageNumber - 1) * PageSize;
             using (var connection = new SqlConnection(connectionString.Setting1))
             {
                 connection.Open();
-                string queryString = "SELECT * FROM movie;";
-
+                string queryString = @$"SELECT * FROM movie
+                                     ORDER BY {sortParameter} {direction}
+                                     OFFSET @RowsSkipped  ROWS
+                                     FETCH NEXT @pageSize ROWS ONLY";
+               
 
                 using (SqlCommand command = new SqlCommand(queryString, connection))
                 {
+                    command.Parameters.AddWithValue("@Direction", direction);
+                    command.Parameters.AddWithValue("@RowsSkipped",rowsSkip);
+                    command.Parameters.AddWithValue("@pageSize",PageSize);
+                   
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
 
@@ -57,6 +64,40 @@ namespace MovieDAL.Repositories
             }
             return movieList;
         }
+        public List<MovieModel> GetAll()
+        {
+            List<MovieModel> movieList = new List<MovieModel>();
+            using (var connection = new SqlConnection(connectionString.Setting1))
+            {
+                connection.Open();
+                string queryString = @"SELECT * FROM movie;";
+
+
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            MovieModel movie = new MovieModel();
+                            movie.MovieId = Convert.ToInt32(reader["movieId"].ToString());
+                            movie.Name = reader["Name"].ToString();
+                            movie.Rating = int.Parse(reader["Rating"].ToString());
+                            movie.ReleaseDate = DateTime.Parse(reader["PremiereDate"].ToString());
+                            movie.ReleasedOnDvd = bool.Parse(reader["DvdRelease"].ToString());
+                            movieList.Add(movie);
+                        }
+                    }
+
+                }
+
+
+            }
+            return movieList;
+        }
+
         public int Save(MovieDto model)
         {
             if (model == null)

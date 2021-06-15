@@ -9,25 +9,27 @@ function Movie(id, name, date, genre, rating, dvd) {
 var movieList = [];
 var pageCounter = 1;
 var totalPages;
+var sortParameter = "Name";
+var direction = "ASC";
 function GetDataFromStorage() {
-    
+
     var submitButton = document.getElementById('submit');
     submitButton.style.display = 'inline';
 
     var submitButton = document.getElementById('submitEdit');
     submitButton.style.display = 'none';
-    promise = $.ajax({
-        url:"https://localhost:44370/api/movies/GetTotalPages",
+    promiseT = $.ajax({
+        url: "https://localhost:44370/api/movies/GetTotalPages",
         method: "Get",
-        data :{format :'json'},
+        data: { format: 'json' },
     });
-    promise.then(function(response){
+    promiseT.then(function (response) {
         totalPages = response;
     })
 
     var table = document.getElementById("myTable");
     promise = $.ajax({
-        url: "https://localhost:44370/api/movies/GetAllMovies?pageNumber="+pageCounter,
+        url: "https://localhost:44370/api/movies/GetAllPagination?pageNumber=" + pageCounter + "&sortParameter=" + sortParameter + "&direction=" + direction,
         method: "GET",
         data: { format: 'json' },
 
@@ -38,20 +40,46 @@ function GetDataFromStorage() {
         clearForm();
         clearTable();
         for (var i = 0; i < data.length; i++)
-            InsertDataIntoTable(i, table, data[i]);
+            InsertDataIntoTable(i, table, movieList[i]);
 
     });
 }
-function addPageNumber(){
- pageCounter++;
- if (pageCounter > totalPages) pageCounter = totalPages;
- GetDataFromStorage();
+
+
+function InsertDataIntoTable(contor, table, movie) {
+
+    var row = table.insertRow(contor + 1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+
+    cell1.innerHTML = movie.name;
+    cell2.innerHTML = movie.releaseDate;
+
+    for (var i = 0; i < movie.genreList.length; i++) {
+        cell3.innerHTML += ' ' + movie.genreList[i].genreName.toString();
+    }
+    cell4.innerHTML = movie.rating;
+    cell5.innerHTML = movie.releasedOnDvd;
+
+    var buttonDelete = document.createElement('button');
+    buttonDelete.innerHTML = "Delete";
+    cell6.appendChild(buttonDelete);
+    buttonDelete.setAttribute('onclick', '(DeleteRow(' + (contor) + '))');
+
+    var buttonEdit = document.createElement('button');
+    buttonEdit.innerHTML = "Edit";
+    cell7.appendChild(buttonEdit);
+    buttonEdit.setAttribute('onclick', '(EditRow(' + (contor) + '))');
+    row.setAttribute('ondblclick', '(EditRow(' + contor + '))');
+    buttonDelete.classList.add('button');
+    buttonEdit.classList.add('button');
 }
-function substractPageNumber(){
-    pageCounter--;
-    if(pageCounter <1 ) pageCounter =1;
-    GetDataFromStorage();
-}
+
 function addInput(event, movieListIndex) {
     event.preventDefault();
 
@@ -95,8 +123,8 @@ function addInput(event, movieListIndex) {
             method: "POST",
             url: "https://localhost:44370/api/movies/SaveMovie",
             data: JSON.stringify({
-                name:  document.getElementById("fname").value,
-               releaseDate: new Date(document.getElementById("ldate").value),
+                name: document.getElementById("fname").value,
+                releaseDate: new Date(document.getElementById("ldate").value),
                 rating: contor,
                 releasedOnDvd: document.getElementById("dvd").checked,
                 genreList: getCheckboxvalues()
@@ -108,11 +136,8 @@ function addInput(event, movieListIndex) {
     promise.then(function () {
         GetDataFromStorage();
     }, function (error) {
-        
-            alert(JSON.stringify( error.responseJSON.errors));
-    
-        
 
+        alert(JSON.stringify(error.responseJSON.errors));
 
     });
 }
@@ -147,184 +172,23 @@ function dateValidation() {
 
 }
 
-function InsertDataIntoTable(contor, table, movie) {
-
-    var row = table.insertRow(contor + 1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
-
-    cell1.innerHTML = movie ? movie.name : movieList[contor].name;
-    cell2.innerHTML = movie ? movie.releaseDate : movieList[contor].date;
-    //aici o sa pice la sortare 
-    for (var i = 0; i < movie.genreList.length; i++) {
-        cell3.innerHTML += ' ' + movie.genreList[i].genreName.toString();
-    }
-
-    cell4.innerHTML = movie ? movie.rating : movieList[contor].rating;
-    cell5.innerHTML = movie ? movie.releasedOnDvd : movieList[contor].dvd;
-
-    var buttonDelete = document.createElement('button');
-    buttonDelete.innerHTML = "Delete";
-    cell6.appendChild(buttonDelete);
-    buttonDelete.setAttribute('onclick', '(DeleteRow(' + (contor) + '))');
-
-    var buttonEdit = document.createElement('button');
-    buttonEdit.innerHTML = "Edit";
-    cell7.appendChild(buttonEdit);
-    buttonEdit.setAttribute('onclick', '(EditRow(' + (contor) + '))');
-    row.setAttribute('ondblclick', '(EditRow(' + contor + '))');
-    buttonDelete.classList.add('button');
-    buttonEdit.classList.add('button');
-
-
-}
-
-
 function DeleteRow(movieListIndex) {
     promise = $.ajax({
         method: "DELETE",
-        url: "https://localhost:44370/api/movies/DeleteMovie?movieId="+ movieList[movieListIndex].movieId,
+        url: "https://localhost:44370/api/movies/DeleteMovie?movieId=" + movieList[movieListIndex].movieId,
 
         contentType: "application/json"
 
     });
     promise.then(function (response) {
-        if (response == false){
+        if (response == false) {
             alert("The movie was not deleted/found");
         }
-       clearTable();
-       GetDataFromStorage()
+        clearTable();
+        GetDataFromStorage()
     }, function (error) {
-       
+
     });
-}
-
-function clearForm() {
-    document.getElementById("myForm").reset();
-}
-
-function chkcontrol(j) {
-    var total = 0;
-
-    for (var i = 0; i < document.forms.myForm.ckb.length; i++) {
-        if (document.forms.myForm.ckb[i].checked) {
-            total = total + 1;
-        }
-        if (total > 3) {
-            alert("Please Select only three")
-            document.forms.myForm.ckb[j].checked = false;
-            return false;
-        }
-    }
-}
-
-
-function getCheckboxvalues() {
-    var values = [];
-    var cbs = document.forms['myForm'].elements['ckb'];
-    for (var i = 0, cbLen = cbs.length; i < cbLen; i++) {
-        if (cbs[i].checked) {
-            values.push(cbs[i].value);
-        }
-    }
-    return values;
-}
-
-function SortDirection(columnIndex) {
-
-    var spanAsc = document.getElementsByClassName("asc");
-    var spanDesc = document.getElementsByClassName("desc");
-    if (getComputedStyle(spanAsc[columnIndex]).display == 'none') {
-
-        for (var i = 0; i < spanAsc.length; i++) {
-
-            spanAsc[i].style.display = "none";
-            spanDesc[i].style.display = "none";
-        }
-        spanAsc[columnIndex].style.display = "inline";
-        return 'asc';
-    } else {
-
-        for (var i = 0; i < spanDesc.length; i++) {
-
-            spanDesc[i].style.display = "none";
-            spanAsc[i].style.display = "none";
-
-        }
-        spanDesc[columnIndex].style.display = "inline";
-        return 'desc';
-    }
-}
-
-
-function SortTable(t) {
-
-    let ColumnValue = new Map();
-    ColumnValue[0] = 'name';
-    ColumnValue[1] = 'date';
-    ColumnValue[2] = 'genre'
-    ColumnValue[3] = 'rating';
-    ColumnValue[4] = 'dvd';
-
-    movieList.sort(compareValues(ColumnValue[t.cellIndex], SortDirection(t.cellIndex)))
-
-    var table = document.getElementById("myTable");
-    clearTable();
-    for (var i = 0; i < movieList.length; i++)
-        InsertDataIntoTable(i, table);
-}
-
-function compareValues(key, order = 'asc') {
-    return function innerSort(a, b) {
-        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-            // property doesn't exist on either object
-            return 0;
-        }
-
-        var varA = (typeof a[key] === 'string')
-            ? a[key].toUpperCase() : a[key];
-        var varB = (typeof b[key] === 'string')
-            ? b[key].toUpperCase() : b[key];
-        if (key == 'date') {
-            varA = new Date(a[key]);
-            varB = new Date(b[key]);
-
-        }
-        let comparison = 0;
-        if (varA > varB) {
-            comparison = 1;
-        } else if (varA < varB) {
-            comparison = -1;
-        }
-        return (
-            (order === 'desc') ? (comparison * -1) : comparison
-        );
-    };
-}
-function clearTable() {
-    var table = document.getElementById("myTable");
-    for (var i = table.rows.length - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-}
-
-function selectStar(t) {
-
-
-    var divStar = document.getElementsByClassName("fa fa-star");
-
-    var index = t.getAttribute('name');
-
-    for (var i = 0; i < divStar.length; i++) {
-        divStar[i].classList.remove('fa-star-selected');
-    }
-    divStar[index - 1].classList.add('fa-star-selected');
-
 }
 
 var editButtonHandler;
@@ -376,3 +240,130 @@ function EditRow(movieListIndex) {
     };
     submitButton.addEventListener('click', editButtonHandler);
 }
+
+function SortTable(t) {
+
+    let ColumnValue = new Map();
+    ColumnValue[0] = 'Name';
+    ColumnValue[1] = 'PremiereDate';
+    ColumnValue[2] = 'genre'
+    ColumnValue[3] = 'Rating';
+    ColumnValue[4] = 'DvdRelease';
+    sortParameter = ColumnValue[t.cellIndex];
+    direction = SortDirection(t.cellIndex)
+    GetDataFromStorage();
+}
+
+function SortDirection(columnIndex) {
+
+    var spanAsc = document.getElementsByClassName("asc");
+    var spanDesc = document.getElementsByClassName("desc");
+    if (getComputedStyle(spanAsc[columnIndex]).display == 'none') {
+
+        for (var i = 0; i < spanAsc.length; i++) {
+
+            spanAsc[i].style.display = "none";
+            spanDesc[i].style.display = "none";
+        }
+        spanAsc[columnIndex].style.display = "inline";
+        return 'ASC';
+    } else {
+
+        for (var i = 0; i < spanDesc.length; i++) {
+
+            spanDesc[i].style.display = "none";
+            spanAsc[i].style.display = "none";
+
+        }
+        spanDesc[columnIndex].style.display = "inline";
+        return 'DESC';
+    }
+}
+function addPageNumber() {
+    pageCounter++;
+    if (pageCounter > totalPages) pageCounter = totalPages;
+    GetDataFromStorage();
+}
+function substractPageNumber() {
+    pageCounter--;
+    if (pageCounter < 1) pageCounter = 1;
+    GetDataFromStorage();
+}
+
+function clearForm() {
+    document.getElementById("myForm").reset();
+}
+function clearTable() {
+    var table = document.getElementById("myTable");
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+}
+function chkcontrol(j) {
+    var total = 0;
+
+    for (var i = 0; i < document.forms.myForm.ckb.length; i++) {
+        if (document.forms.myForm.ckb[i].checked) {
+            total = total + 1;
+        }
+        if (total > 3) {
+            alert("Please Select only three")
+            document.forms.myForm.ckb[j].checked = false;
+            return false;
+        }
+    }
+}
+
+function getCheckboxvalues() {
+    var values = [];
+    var cbs = document.forms['myForm'].elements['ckb'];
+    for (var i = 0, cbLen = cbs.length; i < cbLen; i++) {
+        if (cbs[i].checked) {
+            values.push(cbs[i].value);
+        }
+    }
+    return values;
+}
+
+function selectStar(t) {
+
+
+    var divStar = document.getElementsByClassName("fa fa-star");
+
+    var index = t.getAttribute('name');
+
+    for (var i = 0; i < divStar.length; i++) {
+        divStar[i].classList.remove('fa-star-selected');
+    }
+    divStar[index - 1].classList.add('fa-star-selected');
+
+}
+
+// function compareValues(key, order = 'asc') {
+//     return function innerSort(a, b) {
+//         if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+//             // property doesn't exist on either object
+//             return 0;
+//         }
+
+//         var varA = (typeof a[key] === 'string')
+//             ? a[key].toUpperCase() : a[key];
+//         var varB = (typeof b[key] === 'string')
+//             ? b[key].toUpperCase() : b[key];
+//         if (key == 'date') {
+//             varA = new Date(a[key]);
+//             varB = new Date(b[key]);
+
+//         }
+//         let comparison = 0;
+//         if (varA > varB) {
+//             comparison = 1;
+//         } else if (varA < varB) {
+//             comparison = -1;
+//         }
+//         return (
+//             (order === 'desc') ? (comparison * -1) : comparison
+//         );
+//     };
+//      //movieList.sort(compareValues(ColumnValue[t.cellIndex], SortDirection(t.cellIndex)))
+// }

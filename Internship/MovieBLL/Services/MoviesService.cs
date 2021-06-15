@@ -21,15 +21,13 @@ namespace MovieBLL.Services
             MovieGenreRepository = movieGenreRepository;
         }
 
-        public List<MovieModel> GetAll(int pageNumber, int pageSize = 5 )
+        public List<MovieModel> GetAllPagination(int pageNumber, string sortParameter = "Name", int pageSize = 5, string direction = "ASC")
 
         {
             if (pageNumber < 1) pageNumber = 1;
-            var totalpages = MoviesRepository.GetAll().Count / pageSize + 1;
+            var totalpages = GetTotalPages();
             if (pageNumber > totalpages) pageNumber = totalpages;
-            List<MovieModel> movies = MoviesRepository.GetAll()
-                                     .Skip((pageNumber-1)* pageSize)
-                                     .Take(pageSize).ToList();
+            List<MovieModel> movies = MoviesRepository.GetAllPagination(pageNumber, sortParameter, direction, pageSize);
             foreach (MovieModel m in movies)
             {
                 List<int> genderIds = MovieGenreRepository.GetAllGenresPerMovieId(m.MovieId);
@@ -37,6 +35,8 @@ namespace MovieBLL.Services
             }
             return movies;
         }
+
+
 
         public int GetTotalPages(int pageSize = 5)
         {
@@ -49,7 +49,7 @@ namespace MovieBLL.Services
             List<GenreModel> allGenres = GenreRepository.GetAll();
             int idInsertedGenre = 0;
             int idInsertedMovie = MoviesRepository.Save(movie);
-            
+
             foreach (string genre in movie.GenreList)
             {
                 GenreModel foundGenre = allGenres.Find(g => g.GenreName == genre.ToUpper());
@@ -61,15 +61,15 @@ namespace MovieBLL.Services
                 }
                 else
                 {
-                    idInsertedGenre = foundGenre.GenreId ;
+                    idInsertedGenre = foundGenre.GenreId;
                     MovieGenreRepository.AddMovieGenre(idInsertedMovie, idInsertedGenre);
                 }
             }
         }
 
 
-      
-        // For Stefan : in edit  can you  add a new genre ?  
+
+        // in edit  can you  add a new genre ?  
         public void UpdateMovie(MovieDto movie)
         {
 
@@ -77,7 +77,7 @@ namespace MovieBLL.Services
             foreach (string s in movie.GenreList)
             {
                 var genreFound = GenreRepository.GetAll().Find(g => g.GenreName == s.ToUpper());
-                if ( genreFound != null)
+                if (genreFound != null)
                 {
                     ListIdGenreNewMovie.Add(genreFound.GenreId);
                 }
